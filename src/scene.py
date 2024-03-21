@@ -1,6 +1,4 @@
 from manim import *
-import numpy as np
-from time import sleep
 
 
 class CreateCircle(Scene):
@@ -57,11 +55,15 @@ class Intro(Scene):
     def construct(self):
         quote_template = TexTemplate().add_to_preamble(r"\usepackage{attrib}")
         quote = Tex(
-            r"""\begin{quote}Every tax ought to be so contrived as both
-                to take out and \\ to keep out of the pockets of the
-                people as little as possible, over and above what it
-                brings into the public treasury of the state…\end{quote}
-                \attrib{Adam Smith}
+            r"""\begin{quote} “Capitalism as it exists today is, in my
+                opinion, the real source of evils. I am convinced there
+                is only one way to eliminate these grave evils, namely
+                through the establishment of a socialist economy,
+                accompanied by an educational system which would be
+                oriented toward social goals. In such an economy, the
+                means of production are owned by society itself and are
+                utilized in a planned fashion.” \end{quote}
+                \attrib{Albert Einstein, Why Socialism?}
                 """,
             tex_template=quote_template,
             font_size=30,
@@ -97,14 +99,21 @@ class Slide1(Scene):
     def construct(self):
         intro = Tex(
             r"""
-            The Essence of Macroeconomics: \\
-            A Traveler's Guide to Interest Rates\\and Monetary Policy
-            """
+            The Essence of Macroeconomics
+            """,
+            font_size=72,
         )
         # self.add(labels)
         self.play(Write(intro), run_time=5)
-        sleep(3)
         self.play(Unwrite(intro))
+
+        title = Tex(
+            r"A Traveler's Guide to Interest Rates\\and Monetary Policy", font_size=50
+        )
+
+        self.play(Write(title), run_time=3)
+        self.wait(1)
+        self.play(Unwrite(title))
 
         author = Tex(r"By Youwen Wu, Charles Krueger, and Isaac Chen")
         self.play(Write(author), run_time=5)
@@ -267,6 +276,8 @@ class Slide1(Scene):
             font_size=14,
         ).next_to(line3, DOWN * 0.2)
 
+        self.wait(1)
+
         self.play(
             Create(graph),
             Create(labels),
@@ -299,7 +310,7 @@ class Slide1(Scene):
             Write(labels_2),
         )
 
-        sleep(3)
+        self.wait(3)
 
         self.play(
             Unwrite(graph),
@@ -338,7 +349,7 @@ class Slide1(Scene):
 
 class Slide2(Scene):
     def construct(self):
-        title = Tex(r"Interest Rates", font_size=60).shift(UP * 2.3)
+        title = Tex(r"An Overview of Interest Rates", font_size=60).shift(UP * 2.3)
         line1 = Tex(
             r"""\begin{enumerate}
                     \item Interest can be thought of as the price paid for using money
@@ -351,10 +362,118 @@ class Slide2(Scene):
         )
         line2 = MathTex(
             r"""
-            \text{Interest Rate} = \frac{1}{\text{Bond Price}}
+            \text{Interest Rate}\ \propto \frac{1}{\text{Bond Price}} \Longleftrightarrow \text{Bond Price}\ \propto \frac{1}{\text{Interest Rate}}
             """,
             font_size=30,
         ).next_to(line1, DOWN * 1.5)
 
         self.play(Write(title), Write(line1))
         self.play(Write(line2))
+
+
+class Slide3(Scene):
+    def construct(self):
+        title = Tex(r"The Demand for Money", font_size=60).shift(UP * 2.3)
+        caption = Tex(
+            r"""
+                Why hold on to money?
+            """,
+            font_size=50,
+        ).next_to(title, DOWN, buff=0.7)
+        line1 = Tex(
+            r"""
+                \medskip
+                \begin{enumerate}
+                    \item Transactions demand: demand for money as a medium of exchange
+                    \item Asset demand: the amount of money people want to hold as a store of value
+                \end{enumerate}
+                    """,
+            font_size=30,
+        ).next_to(caption, DOWN, buff=0.3)
+
+        self.play(Write(title))
+        self.play(Write(caption))
+        self.play(Write(line1))
+
+
+class Slide4(Scene):
+    def construct(self):
+        title = Tex(r"Transactions Demand", font_size=60).shift(UP * 2.3)
+
+        definition = (
+            Tex(
+                r"\textbf{Definition}: The amount of money people want\\to hold as a {{ medium of exchange }}",
+            )
+            .set_color_by_tex("medium of exchange", "YELLOW")
+            .next_to(title, DOWN, buff=0.7)
+        )
+
+        line1 = Tex(
+            r"""
+                \medskip
+                \begin{enumerate}
+                    \item People need money on hand to purchase goods and services
+                    \item Directly correlated with nominal (pre-adjusted) GDP
+                    \item Level of nominal GDP determines the amount of money demanded for transactions
+                \end{enumerate}
+                    """,
+            font_size=30,
+        ).next_to(definition, DOWN, buff=0.5)
+
+        math = MathTex(
+            r"""
+                \uparrow~\text{Nominal GDP} \implies \uparrow~\text{Money demanded}
+            """
+        ).next_to(line1, DOWN, buff=0.7)
+
+        self.play(Write(title))
+        self.play(Write(definition))
+        self.play(Write(line1))
+        self.play(Write(math))
+        self.play(Indicate(definition))
+        self.play(Indicate)
+
+
+class Slide5(Scene):
+    def construct(self):
+        title = Tex(r"Asset Demand", font_size=60).shift(UP * 2.3)
+
+        definition = (
+            Tex(
+                r"\textbf{Definition}: The amount of money people want\\to hold as a {{ store of value }}",
+            )
+            .set_color_by_tex("store of value", "YELLOW")
+            .next_to(title, DOWN, buff=0.7)
+        )
+
+        line1 = Tex(
+            r"""
+                \medskip
+                \begin{enumerate}
+                    \item People hold financial assets in many forms, including money, since it's the most liquid
+                    \item Main disadvantage: money holds no interest
+                    \item Interest rate inversely determines asset demand for money
+                \end{enumerate}
+                    """,
+            font_size=30,
+        ).next_to(definition, DOWN, buff=0.7)
+
+        math = MathTex(
+            r"""
+                \uparrow~\text{Interest rates} \implies \downarrow~\text{Money demanded}
+            """
+        ).next_to(line1, DOWN, buff=0.7)
+
+        self.play(Write(title))
+        self.play(Write(definition))
+        self.play(Write(line1))
+        self.play(Write(math))
+        self.play(Indicate(definition))
+        self.play(Indicate(math))
+
+
+class Slide6(Scene):
+    def construct(self):
+        figure = ImageMobject("/src/assets/figFourteenOne.png")
+
+        self.play(Write(figure))
