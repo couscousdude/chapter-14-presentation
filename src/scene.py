@@ -474,6 +474,6 @@ class Slide5(Scene):
 
 class Slide6(Scene):
     def construct(self):
-        figure = ImageMobject("/src/assets/figFourteenOne.png")
+        figure = ImageMobject("./src/assets/figFourteenOne.png")
 
-        self.play(Write(figure))
+        self.play(FadeIn(figure))
